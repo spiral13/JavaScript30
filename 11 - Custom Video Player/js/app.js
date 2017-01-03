@@ -6,6 +6,8 @@ const progressBar = player.querySelector('.progress__filled');
 const toggle = player.querySelector('.toggle');
 const skipButtons = player.querySelectorAll('[data-skip]');
 const ranges = player.querySelectorAll('.player__slider');
+const timeUpdate = player.querySelector('.time-update');
+const timeTotal = player.querySelector('.time-total');
 
 /* Build out function */
 function togglePlay() {
@@ -42,11 +44,21 @@ function scrub(e) {
     video.currentTime = scrubTime;
 }
 
+function updateTime() {
+    const vTime = video.currentTime;
+    const vTotal = video.duration;
+
+    timeUpdate.textContent = vTime.toFixed(1);
+    timeTotal.textContent = vTotal.toFixed(1);
+}
+
 /* Hook up the event listener */
 video.addEventListener('click', togglePlay);
 video.addEventListener('play', updateButton);
 video.addEventListener('pause', updateButton);
 video.addEventListener('timeupdate', handleProgress);
+
+video.addEventListener('timeupdate', updateTime);
 
 toggle.addEventListener('click', togglePlay);
 
